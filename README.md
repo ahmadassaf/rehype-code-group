@@ -1,4 +1,5 @@
-![Copy of Untitled Design (3)](https://github.com/user-attachments/assets/48ded515-3a52-43b9-8d9b-34eff5354dce)
+![Copy of Untitled Design](https://github.com/user-attachments/assets/40973056-7c34-40a0-aeef-c97671aa484d)
+
 
 # Rehype Code Group Plugin 🤖
 
