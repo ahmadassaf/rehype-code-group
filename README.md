@@ -1,5 +1,4 @@
-![Copy of Untitled Design](https://github.com/user-attachments/assets/40973056-7c34-40a0-aeef-c97671aa484d)
-
+![Copy of Untitled Design (1)](https://github.com/user-attachments/assets/fa55322a-d00b-45df-9537-63f43cb781c7)
 
 # Rehype Code Group Plugin 🤖
 
@@ -45,6 +44,12 @@ yarn add rehype-code-group
 
 :::
 ~~~
+
+The code group will be rendered like this (The below UI used [Expressive Code](https://expressive-code.com/) as a syntax highlighter):
+
+![Screenshot 2024-11-13 022223](https://github.com/user-attachments/assets/02bc735b-e9c1-4a2f-af7c-430d15bc6247)
+
+Check this functionalty live: [https://4techloverz.com/wordpress-astro-migration-easy-guide/#initialize-astro-project](https://4techloverz.com/wordpress-astro-migration-easy-guide/#initialize-astro-project)
 
 ### With Rehype
 
