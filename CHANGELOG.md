@@ -1,5 +1,11 @@
 # rehype-code-group
 
+## 0.1.1
+
+### Patch Changes
+
+- [#5](https://github.com/ITZSHOAIB/rehype-code-group/pull/5) [`b917385`](https://github.com/ITZSHOAIB/rehype-code-group/commit/b9173857ce89d1739b9b64b5ce085475ca6caf41) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - refactor: improved performance with better IDE comments
+
 ## 0.1.0
 
 ### Minor Changes
