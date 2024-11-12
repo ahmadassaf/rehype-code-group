@@ -1,33 +1,47 @@
-<head><style>
-.rcg-tabs {
+<!doctype html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+.rehype-code-group {
+  display: grid;
+  gap: 0.6rem;
+}
+.rcg-tab-container {
   display: flex;
   border-bottom: 1px solid #ddd;
 }
 .rcg-tab {
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   border: none;
   background: none;
   outline: none;
-}
-.rcg-tab.rcg-active {
-  border-bottom: 2px solid #007acc;
+  &.active {
+    border-bottom: 2px solid #007acc;
+    font-weight: bold;
+  }
 }
 .rcg-blocks {
   display: none;
+  &.active {
+    display: block;
+  }
 }
-.rcg-blocks.rcg-active {
-  display: block;
-}
-</style><script type="text/javascript">
+</style><style>
+      .rcg-tab.my-active-tab {
+        border-bottom: 2px solid black;
+      }
+    </style>
+  <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function () {
   const codeGroups = document.querySelectorAll(".rehype-code-group");
 
   codeGroups.forEach((group) => {
     const tabs = group.querySelectorAll(".rcg-tab");
     const blocks = group.querySelectorAll(".rcg-blocks");
-    let activeTab = group.querySelector(".rcg-tab.rcg-active");
-    let activeBlock = group.querySelector(".rcg-blocks.rcg-active");
+    let activeTab = group.querySelector(".rcg-tab.active.my-active-tab");
+    let activeBlock = group.querySelector(".rcg-blocks.active");
 
     group.addEventListener("click", (event) => {
       const tab = event.target.closest(".rcg-tab");
@@ -36,25 +50,34 @@ document.addEventListener("DOMContentLoaded", function () {
       const index = Array.from(tabs).indexOf(tab);
       if (index === -1) return;
 
-      if (activeTab) activeTab.classList.remove("rcg-active");
-      if (activeBlock) activeBlock.classList.remove("rcg-active");
+      if (activeTab) activeTab.classList.remove("active", "my-active-tab");
+      if (activeBlock) activeBlock.classList.remove("active");
 
-      tab.classList.add("rcg-active");
-      blocks[index].classList.add("rcg-active");
+      tab.classList.add("active", "my-active-tab");
+      blocks[index].classList.add("active");
 
       activeTab = tab;
       activeBlock = blocks[index];
     });
   });
 });
-</script></head><h1>Heading1</h1>
-<h2>Heading2</h2>
-<div class="rehype-code-group"><div class="rcg-tabs"><button class="rcg-tab rcg-active">npm</button><button class="rcg-tab">pnpm</button></div><div class="rcg-blocks rcg-active"><p>Code 1</p></div><div class="rcg-blocks"><p>Code 2</p></div></div>
+</script></head>
+  <body>
+    <h1>Heading1</h1>
+    <h2>Heading2</h2>
+    <div class="rehype-code-group"><div class="rcg-tab-container"><button class="rcg-tab active my-active-tab">npm</button><button class="rcg-tab">pnpm</button></div><div class="rcg-blocks active"><p>Code 1</p></div><div class="rcg-blocks"><p>Code 2</p></div></div>
 
-<div>
-  <h3>Heading 3</h3>
-  <div class="rehype-code-group"><div class="rcg-tabs"><button class="rcg-tab rcg-active">npm</button><button class="rcg-tab">pnpm</button><button class="rcg-tab">yarn</button></div><div class="rcg-blocks rcg-active"><p>Code 1</p></div><div class="rcg-blocks"><p>Code 2</p></div><div class="rcg-blocks"><p>Code 3</p></div></div>
-</div>
+    <div>
+      <h3>Heading 3</h3>
+      <p>::: code-group labels=[npm, pnpm, yarn]</p>
+      <p>Code 1</p>
+      <p>Code 2</p>
+      <p>Code 3</p>
+      <!-- <p>:::</p> -->
+    </div>
 
-<h2>Heading2</h2>
-<h2>Heading2</h2>
+    <h2>Heading2</h2>
+    <h2>Heading2</h2>
+  
+
+</body></html>
