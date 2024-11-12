@@ -47,7 +47,7 @@ yarn add rehype-code-group
 
 The code group will be rendered like this (The below UI used [Expressive Code](https://expressive-code.com/) as a syntax highlighter):
 
-![Screenshot 2024-11-13 022223](https://github.com/user-attachments/assets/02bc735b-e9c1-4a2f-af7c-430d15bc6247)
+![Screenshot 2024-11-13 021749](https://github.com/user-attachments/assets/0bcae4e7-569a-4189-b890-9f543a67feb6)
 
 Check this functionalty live: [https://4techloverz.com/wordpress-astro-migration-easy-guide/#initialize-astro-project](https://4techloverz.com/wordpress-astro-migration-easy-guide/#initialize-astro-project)
 
