@@ -1,3 +1,5 @@
+![Copy of Untitled Design (3)](https://github.com/user-attachments/assets/48ded515-3a52-43b9-8d9b-34eff5354dce)
+
 # Rehype Code Group Plugin 🤖
 
 A [Rehype](https://github.com/rehypejs/rehype) plugin for grouping code blocks with tabs, allowing you to switch between different code snippets easily. Perfect for documentation and tutorials where you want to show the same code in different languages or configurations.
