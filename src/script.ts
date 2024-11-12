@@ -1,4 +1,5 @@
-import { type ClassNames, defaultClassNames } from "./styles";
+import type { ClassNames } from "./options";
+import { defaultClassNames } from "./styles";
 
 export const getScript = (classNames: ClassNames) => `
 document.addEventListener("DOMContentLoaded", function () {

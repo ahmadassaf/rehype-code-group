@@ -1,4 +1,6 @@
-export const defaultClassNames = {
+import type { ClassNames } from "./options";
+
+export const defaultClassNames: ClassNames = {
   activeTabClass: "active",
   activeBlockClass: "active",
   tabClass: "rcg-tab",
@@ -6,8 +8,6 @@ export const defaultClassNames = {
   blockContainerClass: "rcg-blocks",
   codeGroupClass: "rehype-code-group",
 };
-
-export type ClassNames = typeof defaultClassNames;
 
 const mergeClassNames = (defaultClass: string, customClass?: string) =>
   customClass ? `${defaultClass} ${customClass}` : defaultClass;
