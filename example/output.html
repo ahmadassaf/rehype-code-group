@@ -1,0 +1,60 @@
+<head><style>
+.rcg-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+.rcg-tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+.rcg-tab.rcg-active {
+  border-bottom: 2px solid #007acc;
+}
+.rcg-blocks {
+  display: none;
+}
+.rcg-blocks.rcg-active {
+  display: block;
+}
+</style><script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
+  const codeGroups = document.querySelectorAll(".rehype-code-group");
+
+  codeGroups.forEach((group) => {
+    const tabs = group.querySelectorAll(".rcg-tab");
+    const blocks = group.querySelectorAll(".rcg-blocks");
+    let activeTab = group.querySelector(".rcg-tab.rcg-active");
+    let activeBlock = group.querySelector(".rcg-blocks.rcg-active");
+
+    group.addEventListener("click", (event) => {
+      const tab = event.target.closest(".rcg-tab");
+      if (!tab) return;
+
+      const index = Array.from(tabs).indexOf(tab);
+      if (index === -1) return;
+
+      if (activeTab) activeTab.classList.remove("rcg-active");
+      if (activeBlock) activeBlock.classList.remove("rcg-active");
+
+      tab.classList.add("rcg-active");
+      blocks[index].classList.add("rcg-active");
+
+      activeTab = tab;
+      activeBlock = blocks[index];
+    });
+  });
+});
+</script></head><h1>Heading1</h1>
+<h2>Heading2</h2>
+<div class="rehype-code-group"><div class="rcg-tabs"><button class="rcg-tab rcg-active">npm</button><button class="rcg-tab">pnpm</button></div><div class="rcg-blocks rcg-active"><p>Code 1</p></div><div class="rcg-blocks"><p>Code 2</p></div></div>
+
+<div>
+  <h3>Heading 3</h3>
+  <div class="rehype-code-group"><div class="rcg-tabs"><button class="rcg-tab rcg-active">npm</button><button class="rcg-tab">pnpm</button><button class="rcg-tab">yarn</button></div><div class="rcg-blocks rcg-active"><p>Code 1</p></div><div class="rcg-blocks"><p>Code 2</p></div><div class="rcg-blocks"><p>Code 3</p></div></div>
+</div>
+
+<h2>Heading2</h2>
+<h2>Heading2</h2>
