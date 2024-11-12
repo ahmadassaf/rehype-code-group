@@ -81,7 +81,7 @@
     "access": "public"
   },
   "lint-staged": {
-    "*": ["pnpm lint", "git add"]
+    "*.{js,ts,html}": ["pnpm lint", "git add"]
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm typecheck && pnpm lint:staged"
