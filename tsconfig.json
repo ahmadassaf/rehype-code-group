@@ -30,6 +30,6 @@
     "declarationMap": true,
     "declarationDir": "./dist"
   },
-  "include": ["src"],
+  "include": ["src", "example"],
   "exclude": ["node_modules", "dist"]
 }
