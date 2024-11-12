@@ -1,28 +1,65 @@
 import type { Element, Root } from "hast";
-import { toString as hastToString } from "hast-util-to-string";
 import type { Plugin } from "unified";
 import { SKIP, visit } from "unist-util-visit";
+import type { CodeGroup } from "./elements";
 import {
-  type CodeGroup,
-  createRehypeCodeGroupElement,
-  createScriptElement,
-  createStyleElement,
-} from "./elements";
+  handleEndDelimiter,
+  handleStartDelimiter,
+  isEndDelimiterNode,
+  isStartDelimiterNode,
+} from "./handlers/delimiters";
+import { addStylesAndScript } from "./handlers/stylesAndScript";
 import type { RehypeCodeGroupOptions } from "./options";
-import { type ClassNames, getClassNames } from "./styles";
+import { getClassNames } from "./styles";
 
-const START_DELIMITER_REGEX = /::: code-group labels=\[([^\]]+)\]/;
-const END_DELIMITER = ":::";
-
-const isStartDelimiterNode = (node: Element): boolean => {
-  const match = hastToString(node).trim().match(START_DELIMITER_REGEX);
-  return node.tagName === "p" && match !== null;
-};
-
-const isEndDelimiterNode = (node: Element): boolean => {
-  return node.tagName === "p" && hastToString(node).trim() === END_DELIMITER;
-};
-
+/**
+ * ## Rehype Code Group
+ * A Rehype plugin for grouping code blocks with tabs,
+ * allowing you to switch between different code snippets easily.
+ * Perfect for documentation and tutorials where you want to show
+ * the same code in different languages or configurations.
+ *
+ * Works with all Code Syntax Highlighters
+ *
+ * @param options {@link RehypeCodeGroupOptions} - Options to customize the plugin.
+ * @returns Transformer function to process the AST.
+ *
+ * @example
+ * // With rehype
+ * import fs from "node:fs/promises";
+ * import { rehype } from "rehype";
+ * import rehypeCodeGroup from "rehype-code-group";
+ *
+ * const document = await fs.readFile("example/input.html", "utf8");
+ *
+ * const file = await rehype()
+ *   .use(rehypeCodeGroup, {
+ *     customClassNames: {
+ *       activeTabClass: "my-active-tab",
+ *     },
+ *   })
+ *   .process(document);
+ *
+ * await fs.writeFile("example/output.html", String(file));
+ *
+ * @example
+ * // With Astro (https://astro.build)
+ * import { defineConfig } from 'astro/config';
+ * import rehypeCodeGroup from 'rehype-code-group';
+ *
+ * // https://docs.astro.build/en/reference/configuration-reference/
+ * export default defineConfig({
+ *   // ...
+ *   markdown: {
+ *     // ...
+ *     rehypePlugins: [
+ *       // ...
+ *       rehypeCodeGroup,
+ *     ],
+ *   },
+ *   // ...
+ * });
+ */
 const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
   options = {},
 ) => {
@@ -30,106 +67,73 @@ const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
   const classNames = getClassNames(customClassNames);
 
   return (tree: Root) => {
+    let headElement: Element | undefined;
+    let htmlElement: Element | undefined;
+    let firstStyleIndex = -1;
     const codeGroups: CodeGroup[] = [];
     let codeGroupFound = false;
 
-    // Find code groups and wrap them in a rehype-code-group element
+    /**
+     * Visit each element node in the tree to
+     * - find code groups and wrap them in a rehype-code-group element.
+     * - find the head and html elements to add styles and script.
+     *
+     * @param {Element} node - The current node being visited.
+     * @param {number} index - The index of the current node in its parent's children.
+     * @param {Element} parent - The parent of the current node.
+     */
     visit(tree, "element", (node, index, parent) => {
-      if (node.type !== "element" || !parent || index === undefined) {
+      if (node.type !== "element" || index === undefined) {
+        return;
+      }
+
+      if (node.tagName === "head") {
+        headElement = node;
+      }
+
+      if (node.tagName === "html") {
+        htmlElement = node;
+      }
+
+      // Identify the first style element index
+      if (node.tagName === "style" && firstStyleIndex === -1) {
+        firstStyleIndex = index ?? -1;
+      }
+
+      if (!parent) {
         return;
       }
 
       if (isStartDelimiterNode(node)) {
-        const startMatch = hastToString(node)
-          .trim()
-          .match(START_DELIMITER_REGEX);
-
-        if (!startMatch) {
-          return;
-        }
-
-        const tabLabels = startMatch[1].split(",").map((label) => label.trim());
-        codeGroups.push({ parentNode: parent, startIndex: index, tabLabels });
-
+        handleStartDelimiter(node, index, parent, codeGroups);
         return [SKIP];
       }
 
-      if (!isEndDelimiterNode(node)) {
-        return;
-      }
-
-      const codeGroup = codeGroups.pop();
-      const endIndex = index;
-
-      if (codeGroup && codeGroup.parentNode === parent) {
-        const { parentNode, startIndex } = codeGroup;
-
-        const rehypeCodeGroupElement: Element = createRehypeCodeGroupElement(
-          codeGroup,
-          endIndex,
+      if (isEndDelimiterNode(node)) {
+        const { found, skipIndex } = handleEndDelimiter(
+          index,
+          parent,
+          codeGroups,
           classNames,
         );
 
-        parentNode.children.splice(
-          startIndex,
-          endIndex - startIndex + 1,
-          rehypeCodeGroupElement,
-        );
-        codeGroupFound = true;
-        return [SKIP, startIndex + 1];
+        if (found) {
+          codeGroupFound = found;
+          return [SKIP, skipIndex];
+        }
       }
     });
 
     if (codeGroupFound) {
-      addStylesAndScript(tree, classNames);
+      addStylesAndScript(
+        tree,
+        classNames,
+        headElement,
+        htmlElement,
+        firstStyleIndex,
+      );
     }
   };
-};
-
-// Add styles and script to the head of the document
-const addStylesAndScript = (tree: Root, classNames: ClassNames) => {
-  let head: Element | undefined;
-  let html: Element | undefined;
-  let firstStyleIndex = -1;
-
-  visit(tree, "element", (node, index) => {
-    if (node.tagName === "head") {
-      head = node;
-    }
-    if (node.tagName === "html") {
-      html = node;
-    }
-    if (node.tagName === "style" && firstStyleIndex === -1) {
-      firstStyleIndex = index ?? -1;
-    }
-  });
-
-  const styleElement: Element = createStyleElement();
-  const scriptElement: Element = createScriptElement(classNames);
-
-  if (head) {
-    if (firstStyleIndex !== -1) {
-      head.children.splice(firstStyleIndex, 0, styleElement);
-    } else {
-      head.children.push(styleElement);
-    }
-    head.children.push(scriptElement);
-  } else if (html) {
-    head = {
-      type: "element",
-      tagName: "head",
-      properties: {},
-      children: [styleElement, scriptElement],
-    };
-    html.children.unshift(head);
-  } else {
-    tree.children.unshift({
-      type: "element",
-      tagName: "head",
-      properties: {},
-      children: [styleElement, scriptElement],
-    });
-  }
 };
 
 export default rehypeCodeGroup;
