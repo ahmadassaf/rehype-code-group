@@ -2,6 +2,14 @@ import type { Element, Root } from "hast";
 import { toString as hastToString } from "hast-util-to-string";
 import type { Plugin } from "unified";
 import { SKIP, visit } from "unist-util-visit";
+import {
+  type CodeGroup,
+  createRehypeCodeGroupElement,
+  createScriptElement,
+  createStyleElement,
+} from "./elements";
+import type { RehypeCodeGroupOptions } from "./options";
+import { type ClassNames, getClassNames } from "./styles";
 
 const START_DELIMITER_REGEX = /::: code-group labels=\[([^\]]+)\]/;
 const END_DELIMITER = ":::";
@@ -15,11 +23,17 @@ const isEndDelimiterNode = (node: Element): boolean => {
   return node.tagName === "p" && hastToString(node).trim() === END_DELIMITER;
 };
 
-const rehypeCodeGroup: Plugin<[], Root> = () => {
-  return (tree: Root) => {
-    const stack: { node: Element | Root; index: number; labels: string[] }[] =
-      [];
+const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
+  options = {},
+) => {
+  const { customClassNames } = options;
+  const classNames = getClassNames(customClassNames);
 
+  return (tree: Root) => {
+    const codeGroups: CodeGroup[] = [];
+    let codeGroupFound = false;
+
+    // Find code groups and wrap them in a rehype-code-group element
     visit(tree, "element", (node, index, parent) => {
       if (node.type !== "element" || !parent || index === undefined) {
         return;
@@ -30,144 +44,92 @@ const rehypeCodeGroup: Plugin<[], Root> = () => {
           .trim()
           .match(START_DELIMITER_REGEX);
 
-        if (startMatch) {
-          const labels = startMatch[1].split(",").map((label) => label.trim());
-          stack.push({ node: parent, index, labels });
+        if (!startMatch) {
+          return;
         }
+
+        const tabLabels = startMatch[1].split(",").map((label) => label.trim());
+        codeGroups.push({ parentNode: parent, startIndex: index, tabLabels });
+
         return [SKIP];
       }
 
-      if (isEndDelimiterNode(node)) {
-        const start = stack.pop();
-        if (start && start.node === parent) {
-          const { node: startNode, index: startIndex, labels } = start;
-          const children: Element[] = [];
+      if (!isEndDelimiterNode(node)) {
+        return;
+      }
 
-          for (let i = startIndex + 1; i < index; i++) {
-            const sibling = startNode.children[i] as Element;
+      const codeGroup = codeGroups.pop();
+      const endIndex = index;
 
-            if (sibling.type === "element") {
-              children.push({
-                type: "element",
-                tagName: "div",
-                properties: {
-                  className: `rcg-blocks${!children.length ? " rcg-active" : ""}`,
-                },
-                children: [sibling],
-              });
-            }
-          }
+      if (codeGroup && codeGroup.parentNode === parent) {
+        const { parentNode, startIndex } = codeGroup;
 
-          startNode.children.splice(startIndex, index - startIndex + 1, {
-            type: "element",
-            tagName: "div",
-            properties: { className: "rehype-code-group" },
-            children: [
-              {
-                type: "element",
-                tagName: "div",
-                properties: { className: "rcg-tabs" },
-                children: labels.map((label, i) => ({
-                  type: "element",
-                  tagName: "button",
-                  properties: {
-                    className: `rcg-tab${i === 0 ? " rcg-active" : ""}`,
-                  },
-                  children: [{ type: "text", value: label }],
-                })),
-              },
-              ...children,
-            ],
-          });
-          return [SKIP, startIndex + 1];
-        }
+        const rehypeCodeGroupElement: Element = createRehypeCodeGroupElement(
+          codeGroup,
+          endIndex,
+          classNames,
+        );
+
+        parentNode.children.splice(
+          startIndex,
+          endIndex - startIndex + 1,
+          rehypeCodeGroupElement,
+        );
+        codeGroupFound = true;
+        return [SKIP, startIndex + 1];
       }
     });
 
-    visit(tree, "root", (node) => {
-      const head = node.children.find(
-        (child) => child.type === "element" && child.tagName === "head",
-      ) as Element;
-
-      const styleElement: Element = {
-        type: "element",
-        tagName: "style",
-        properties: {},
-        children: [{ type: "text", value: styles }],
-      };
-
-      const scriptElement: Element = {
-        type: "element",
-        tagName: "script",
-        properties: { type: "text/javascript" },
-        children: [{ type: "text", value: script }],
-      };
-
-      if (head) {
-        head.children.push(styleElement, scriptElement);
-      } else {
-        node.children.unshift({
-          type: "element",
-          tagName: "head",
-          properties: {},
-          children: [styleElement, scriptElement],
-        });
-      }
-    });
+    if (codeGroupFound) {
+      addStylesAndScript(tree, classNames);
+    }
   };
 };
 
-const styles = `
-.rcg-tabs {
-  display: flex;
-  border-bottom: 1px solid #ddd;
-}
-.rcg-tab {
-  padding: 10px 20px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  outline: none;
-}
-.rcg-tab.rcg-active {
-  border-bottom: 2px solid #007acc;
-}
-.rcg-blocks {
-  display: none;
-}
-.rcg-blocks.rcg-active {
-  display: block;
-}
-`;
+// Add styles and script to the head of the document
+const addStylesAndScript = (tree: Root, classNames: ClassNames) => {
+  let head: Element | undefined;
+  let html: Element | undefined;
+  let firstStyleIndex = -1;
 
-const script = `
-document.addEventListener("DOMContentLoaded", function () {
-  const codeGroups = document.querySelectorAll(".rehype-code-group");
-
-  codeGroups.forEach((group) => {
-    const tabs = group.querySelectorAll(".rcg-tab");
-    const blocks = group.querySelectorAll(".rcg-blocks");
-    let activeTab = group.querySelector(".rcg-tab.rcg-active");
-    let activeBlock = group.querySelector(".rcg-blocks.rcg-active");
-
-    group.addEventListener("click", (event) => {
-      const tab = event.target.closest(".rcg-tab");
-      if (!tab) return;
-
-      const index = Array.from(tabs).indexOf(tab);
-      if (index === -1) return;
-
-      if (activeTab) activeTab.classList.remove("rcg-active");
-      if (activeBlock) activeBlock.classList.remove("rcg-active");
-
-      tab.classList.add("rcg-active");
-      blocks[index].classList.add("rcg-active");
-
-      activeTab = tab;
-      activeBlock = blocks[index];
-    });
+  visit(tree, "element", (node, index) => {
+    if (node.tagName === "head") {
+      head = node;
+    }
+    if (node.tagName === "html") {
+      html = node;
+    }
+    if (node.tagName === "style" && firstStyleIndex === -1) {
+      firstStyleIndex = index ?? -1;
+    }
   });
-});
-`;
+
+  const styleElement: Element = createStyleElement();
+  const scriptElement: Element = createScriptElement(classNames);
+
+  if (head) {
+    if (firstStyleIndex !== -1) {
+      head.children.splice(firstStyleIndex, 0, styleElement);
+    } else {
+      head.children.push(styleElement);
+    }
+    head.children.push(scriptElement);
+  } else if (html) {
+    head = {
+      type: "element",
+      tagName: "head",
+      properties: {},
+      children: [styleElement, scriptElement],
+    };
+    html.children.unshift(head);
+  } else {
+    tree.children.unshift({
+      type: "element",
+      tagName: "head",
+      properties: {},
+      children: [styleElement, scriptElement],
+    });
+  }
+};
 
 export default rehypeCodeGroup;

@@ -5,8 +5,11 @@ import rehypeCodeGroup from "../dist/index.mjs";
 const document = await fs.readFile("example/input.html", "utf8");
 
 const file = await rehype()
-  .data("settings", { fragment: true })
-  .use(rehypeCodeGroup)
+  .use(rehypeCodeGroup, {
+    customClassNames: {
+      activeTabClass: "my-active-tab",
+    },
+  })
   .process(document);
 
 await fs.writeFile("example/output.html", String(file));
