@@ -69,7 +69,15 @@
     "rehype-code-tabs",
     "rehype-code-grouping",
     "rehype-code-group-tabs",
-    "rehype-code-grouping-tabs"
+    "rehype-code-grouping-tabs",
+    "rehype-tabs",
+    "rehype-tab",
+    "rehype-code-block",
+    "rehype-code-group-block",
+    "rehype-code-grouping-block",
+    "rehype-code-grouping-tabs-block",
+    "rehype-tabs-block",
+    "rehype-tab-block"
   ],
   "author": "Sohab Sk",
   "license": "MIT",
