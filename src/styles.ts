@@ -57,7 +57,6 @@ export const styles = `
   cursor: pointer;
   border: none;
   background: none;
-  outline: none;
   &.${defaultClassNames.activeTabClass} {
     border-bottom: 2px solid;
     font-weight: bold;

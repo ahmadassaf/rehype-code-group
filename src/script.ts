@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
           .map((c) => `"${c}"`)
           .join(", ")});
         activeTab.setAttribute("aria-selected", "false");
-        activeTab.setAttribute("tabindex", "-1");
       }
        if (activeBlock) {
         activeBlock.classList.remove(${activeBlockClassNames
@@ -38,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       tab.classList.add(${activeTabClassNames.map((c) => `"${c}"`).join(", ")});
       tab.setAttribute("aria-selected", "true");
-      tab.setAttribute("tabindex", "0");
       blocks[index].classList.add(${activeBlockClassNames
         .map((c) => `"${c}"`)
         .join(", ")});

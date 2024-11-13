@@ -31,7 +31,6 @@ const createRcgTabsElement = (
         "aria-selected": i === 0 ? "true" : "false",
         "aria-controls": `${uniqueId}-block-${i}`,
         id: `${uniqueId}-tab-${i}`,
-        tabindex: i === 0 ? "0" : "-1",
       },
       children: [{ type: "text", value: label }],
     })),

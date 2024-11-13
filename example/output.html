@@ -18,7 +18,6 @@
         cursor: pointer;
         border: none;
         background: none;
-        outline: none;
         &.active {
           border-bottom: 2px solid;
           font-weight: bold;
@@ -56,7 +55,6 @@
             if (activeTab) {
               activeTab.classList.remove("active", "my-active-tab");
               activeTab.setAttribute("aria-selected", "false");
-              activeTab.setAttribute("tabindex", "-1");
             }
             if (activeBlock) {
               activeBlock.classList.remove("active");
@@ -65,7 +63,6 @@
 
             tab.classList.add("active", "my-active-tab");
             tab.setAttribute("aria-selected", "true");
-            tab.setAttribute("tabindex", "0");
             blocks[index].classList.add("active");
             blocks[index].removeAttribute("hidden");
 
@@ -85,18 +82,16 @@
           class="rcg-tab active my-active-tab"
           role="tab"
           aria-selected="true"
-          aria-controls="rcg-uqfovmo0t-block-0"
-          id="rcg-uqfovmo0t-tab-0"
-          tabindex="0"
+          aria-controls="rcg-zbyywb649-block-0"
+          id="rcg-zbyywb649-tab-0"
         >
           npm</button
         ><button
           class="rcg-tab"
           role="tab"
           aria-selected="false"
-          aria-controls="rcg-uqfovmo0t-block-1"
-          id="rcg-uqfovmo0t-tab-1"
-          tabindex="-1"
+          aria-controls="rcg-zbyywb649-block-1"
+          id="rcg-zbyywb649-tab-1"
         >
           pnpm
         </button>
@@ -104,16 +99,16 @@
       <div
         class="rcg-block active"
         role="tabpanel"
-        aria-labelledby="rcg-uqfovmo0t-tab-0"
-        id="rcg-uqfovmo0t-block-0"
+        aria-labelledby="rcg-zbyywb649-tab-0"
+        id="rcg-zbyywb649-block-0"
       >
         <p>Code 1</p>
       </div>
       <div
         class="rcg-block"
         role="tabpanel"
-        aria-labelledby="rcg-uqfovmo0t-tab-1"
-        id="rcg-uqfovmo0t-block-1"
+        aria-labelledby="rcg-zbyywb649-tab-1"
+        id="rcg-zbyywb649-block-1"
         hidden
       >
         <p>Code 2</p>
@@ -128,27 +123,24 @@
             class="rcg-tab active my-active-tab"
             role="tab"
             aria-selected="true"
-            aria-controls="rcg-i8xyro6ev-block-0"
-            id="rcg-i8xyro6ev-tab-0"
-            tabindex="0"
+            aria-controls="rcg-rsc8o820o-block-0"
+            id="rcg-rsc8o820o-tab-0"
           >
             npm</button
           ><button
             class="rcg-tab"
             role="tab"
             aria-selected="false"
-            aria-controls="rcg-i8xyro6ev-block-1"
-            id="rcg-i8xyro6ev-tab-1"
-            tabindex="-1"
+            aria-controls="rcg-rsc8o820o-block-1"
+            id="rcg-rsc8o820o-tab-1"
           >
             pnpm</button
           ><button
             class="rcg-tab"
             role="tab"
             aria-selected="false"
-            aria-controls="rcg-i8xyro6ev-block-2"
-            id="rcg-i8xyro6ev-tab-2"
-            tabindex="-1"
+            aria-controls="rcg-rsc8o820o-block-2"
+            id="rcg-rsc8o820o-tab-2"
           >
             yarn
           </button>
@@ -156,16 +148,16 @@
         <div
           class="rcg-block active"
           role="tabpanel"
-          aria-labelledby="rcg-i8xyro6ev-tab-0"
-          id="rcg-i8xyro6ev-block-0"
+          aria-labelledby="rcg-rsc8o820o-tab-0"
+          id="rcg-rsc8o820o-block-0"
         >
           <p>Code 1</p>
         </div>
         <div
           class="rcg-block"
           role="tabpanel"
-          aria-labelledby="rcg-i8xyro6ev-tab-1"
-          id="rcg-i8xyro6ev-block-1"
+          aria-labelledby="rcg-rsc8o820o-tab-1"
+          id="rcg-rsc8o820o-block-1"
           hidden
         >
           <p>Code 2</p>
@@ -173,8 +165,8 @@
         <div
           class="rcg-block"
           role="tabpanel"
-          aria-labelledby="rcg-i8xyro6ev-tab-2"
-          id="rcg-i8xyro6ev-block-2"
+          aria-labelledby="rcg-rsc8o820o-tab-2"
+          id="rcg-rsc8o820o-block-2"
           hidden
         >
           <p>Code 3</p>
