@@ -1,15 +1,19 @@
 import type { ClassNames } from "./options";
 import { defaultClassNames } from "./styles";
 
-export const getScript = (classNames: ClassNames) => `
+export const getScript = (classNames: ClassNames) => {
+  const activeTabClassNames = classNames.activeTabClass.split(" ");
+  const activeBlockClassNames = classNames.activeBlockClass.split(" ");
+
+  return `
 document.addEventListener("DOMContentLoaded", function () {
   const codeGroups = document.querySelectorAll(".${defaultClassNames.codeGroupClass}");
 
   codeGroups.forEach((group) => {
     const tabs = group.querySelectorAll(".${defaultClassNames.tabClass}");
     const blocks = group.querySelectorAll(".${defaultClassNames.blockContainerClass}");
-    let activeTab = group.querySelector(".${defaultClassNames.tabClass}.${classNames.activeTabClass.split(" ").join(".")}");
-    let activeBlock = group.querySelector(".${defaultClassNames.blockContainerClass}.${classNames.activeBlockClass.split(" ").join(".")}");
+    let activeTab = group.querySelector(".${defaultClassNames.tabClass}.${activeTabClassNames.join(".")}");
+    let activeBlock = group.querySelector(".${defaultClassNames.blockContainerClass}.${activeBlockClassNames.join(".")}");
 
     group.addEventListener("click", (event) => {
       const tab = event.target.closest(".${defaultClassNames.tabClass}");
@@ -18,23 +22,27 @@ document.addEventListener("DOMContentLoaded", function () {
       const index = Array.from(tabs).indexOf(tab);
       if (index === -1) return;
 
-      if (activeTab) activeTab.classList.remove(${classNames.activeTabClass
-        .split(" ")
-        .map((c) => `"${c}"`)
-        .join(", ")});
-      if (activeBlock) activeBlock.classList.remove(${classNames.activeBlockClass
-        .split(" ")
-        .map((c) => `"${c}"`)
-        .join(", ")});
+      if (activeTab) {
+        activeTab.classList.remove(${activeTabClassNames
+          .map((c) => `"${c}"`)
+          .join(", ")});
+        activeTab.setAttribute("aria-selected", "false");
+        activeTab.setAttribute("tabindex", "-1");
+      }
+       if (activeBlock) {
+        activeBlock.classList.remove(${activeBlockClassNames
+          .map((c) => `"${c}"`)
+          .join(", ")});
+        activeBlock.setAttribute("hidden", "true");
+      }
 
-      tab.classList.add(${classNames.activeTabClass
-        .split(" ")
+      tab.classList.add(${activeTabClassNames.map((c) => `"${c}"`).join(", ")});
+      tab.setAttribute("aria-selected", "true");
+      tab.setAttribute("tabindex", "0");
+      blocks[index].classList.add(${activeBlockClassNames
         .map((c) => `"${c}"`)
         .join(", ")});
-      blocks[index].classList.add(${classNames.activeBlockClass
-        .split(" ")
-        .map((c) => `"${c}"`)
-        .join(", ")});
+      blocks[index].removeAttribute("hidden");
 
       activeTab = tab;
       activeBlock = blocks[index];
@@ -42,3 +50,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 `;
+};

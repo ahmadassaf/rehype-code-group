@@ -5,7 +5,7 @@ export const defaultClassNames: ClassNames = {
   activeBlockClass: "active",
   tabClass: "rcg-tab",
   tabContainerClass: "rcg-tab-container",
-  blockContainerClass: "rcg-blocks",
+  blockContainerClass: "rcg-block",
   codeGroupClass: "rehype-code-group",
 };
 
@@ -59,7 +59,7 @@ export const styles = `
   background: none;
   outline: none;
   &.${defaultClassNames.activeTabClass} {
-    border-bottom: 2px solid #007acc;
+    border-bottom: 2px solid;
     font-weight: bold;
   }
 }
