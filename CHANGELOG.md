@@ -1,5 +1,11 @@
 # rehype-code-group
 
+## 0.1.3
+
+### Patch Changes
+
+- [`2df1e4a`](https://github.com/ITZSHOAIB/rehype-code-group/commit/2df1e4a34693590c9402566ca2d358ee982db69b) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: enhanced accessibility for tabs
+
 ## 0.1.2
 
 ### Patch Changes
