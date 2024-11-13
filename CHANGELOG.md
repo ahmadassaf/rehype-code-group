@@ -1,5 +1,11 @@
 # rehype-code-group
 
+## 0.1.2
+
+### Patch Changes
+
+- [`d743267`](https://github.com/ITZSHOAIB/rehype-code-group/commit/d743267ecfd69e370e1c2575fb800863a095c3af) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: improved accesibility of code group tabs
+
 ## 0.1.1
 
 ### Patch Changes
