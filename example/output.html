@@ -20,11 +20,11 @@
         background: none;
         outline: none;
         &.active {
-          border-bottom: 2px solid #007acc;
+          border-bottom: 2px solid;
           font-weight: bold;
         }
       }
-      .rcg-blocks {
+      .rcg-block {
         display: none;
         &.active {
           display: block;
@@ -42,9 +42,9 @@
 
         codeGroups.forEach((group) => {
           const tabs = group.querySelectorAll(".rcg-tab");
-          const blocks = group.querySelectorAll(".rcg-blocks");
+          const blocks = group.querySelectorAll(".rcg-block");
           let activeTab = group.querySelector(".rcg-tab.active.my-active-tab");
-          let activeBlock = group.querySelector(".rcg-blocks.active");
+          let activeBlock = group.querySelector(".rcg-block.active");
 
           group.addEventListener("click", (event) => {
             const tab = event.target.closest(".rcg-tab");
@@ -53,12 +53,21 @@
             const index = Array.from(tabs).indexOf(tab);
             if (index === -1) return;
 
-            if (activeTab)
+            if (activeTab) {
               activeTab.classList.remove("active", "my-active-tab");
-            if (activeBlock) activeBlock.classList.remove("active");
+              activeTab.setAttribute("aria-selected", "false");
+              activeTab.setAttribute("tabindex", "-1");
+            }
+            if (activeBlock) {
+              activeBlock.classList.remove("active");
+              activeBlock.setAttribute("hidden", "true");
+            }
 
             tab.classList.add("active", "my-active-tab");
+            tab.setAttribute("aria-selected", "true");
+            tab.setAttribute("tabindex", "0");
             blocks[index].classList.add("active");
+            blocks[index].removeAttribute("hidden");
 
             activeTab = tab;
             activeBlock = blocks[index];
@@ -71,25 +80,105 @@
     <h1>Heading1</h1>
     <h2>Heading2</h2>
     <div class="rehype-code-group">
-      <div class="rcg-tab-container">
-        <button class="rcg-tab active my-active-tab">npm</button
-        ><button class="rcg-tab">pnpm</button>
+      <div class="rcg-tab-container" role="tablist">
+        <button
+          class="rcg-tab active my-active-tab"
+          role="tab"
+          aria-selected="true"
+          aria-controls="rcg-uqfovmo0t-block-0"
+          id="rcg-uqfovmo0t-tab-0"
+          tabindex="0"
+        >
+          npm</button
+        ><button
+          class="rcg-tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="rcg-uqfovmo0t-block-1"
+          id="rcg-uqfovmo0t-tab-1"
+          tabindex="-1"
+        >
+          pnpm
+        </button>
       </div>
-      <div class="rcg-blocks active"><p>Code 1</p></div>
-      <div class="rcg-blocks"><p>Code 2</p></div>
+      <div
+        class="rcg-block active"
+        role="tabpanel"
+        aria-labelledby="rcg-uqfovmo0t-tab-0"
+        id="rcg-uqfovmo0t-block-0"
+      >
+        <p>Code 1</p>
+      </div>
+      <div
+        class="rcg-block"
+        role="tabpanel"
+        aria-labelledby="rcg-uqfovmo0t-tab-1"
+        id="rcg-uqfovmo0t-block-1"
+        hidden
+      >
+        <p>Code 2</p>
+      </div>
     </div>
 
     <div>
       <h3>Heading 3</h3>
       <div class="rehype-code-group">
-        <div class="rcg-tab-container">
-          <button class="rcg-tab active my-active-tab">npm</button
-          ><button class="rcg-tab">pnpm</button
-          ><button class="rcg-tab">yarn</button>
+        <div class="rcg-tab-container" role="tablist">
+          <button
+            class="rcg-tab active my-active-tab"
+            role="tab"
+            aria-selected="true"
+            aria-controls="rcg-i8xyro6ev-block-0"
+            id="rcg-i8xyro6ev-tab-0"
+            tabindex="0"
+          >
+            npm</button
+          ><button
+            class="rcg-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="rcg-i8xyro6ev-block-1"
+            id="rcg-i8xyro6ev-tab-1"
+            tabindex="-1"
+          >
+            pnpm</button
+          ><button
+            class="rcg-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="rcg-i8xyro6ev-block-2"
+            id="rcg-i8xyro6ev-tab-2"
+            tabindex="-1"
+          >
+            yarn
+          </button>
         </div>
-        <div class="rcg-blocks active"><p>Code 1</p></div>
-        <div class="rcg-blocks"><p>Code 2</p></div>
-        <div class="rcg-blocks"><p>Code 3</p></div>
+        <div
+          class="rcg-block active"
+          role="tabpanel"
+          aria-labelledby="rcg-i8xyro6ev-tab-0"
+          id="rcg-i8xyro6ev-block-0"
+        >
+          <p>Code 1</p>
+        </div>
+        <div
+          class="rcg-block"
+          role="tabpanel"
+          aria-labelledby="rcg-i8xyro6ev-tab-1"
+          id="rcg-i8xyro6ev-block-1"
+          hidden
+        >
+          <p>Code 2</p>
+        </div>
+        <div
+          class="rcg-block"
+          role="tabpanel"
+          aria-labelledby="rcg-i8xyro6ev-tab-2"
+          id="rcg-i8xyro6ev-block-2"
+          hidden
+        >
+          <p>Code 3</p>
+        </div>
       </div>
     </div>
 

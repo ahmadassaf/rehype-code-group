@@ -4,6 +4,8 @@
 
 A [Rehype](https://github.com/rehypejs/rehype) plugin for grouping code blocks with tabs, allowing you to switch between different code snippets easily. Perfect for documentation and tutorials where you want to show the same code in different languages or configurations.
 
+**Inspired by [Vitepress Code Groups](https://vitepress.dev/guide/markdown#code-groups)**
+
 ## Features ✨
 
 - Group code blocks with tabs
