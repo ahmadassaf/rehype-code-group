@@ -1,5 +1,11 @@
 # rehype-code-group
 
+## 0.2.0
+
+### Minor Changes
+
+- [#10](https://github.com/ITZSHOAIB/rehype-code-group/pull/10) [`cf0c4e2`](https://github.com/ITZSHOAIB/rehype-code-group/commit/cf0c4e2f8d2637992ae91b2447dec44ae3cd535f) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - chore: build process revamped for unminifed dist
+
 ## 0.1.3
 
 ### Patch Changes
