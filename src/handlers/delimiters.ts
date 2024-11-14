@@ -1,7 +1,10 @@
 import type { Element, Root } from "hast";
 import { toString as hastToString } from "hast-util-to-string";
-import { type CodeGroup, createRehypeCodeGroupElement } from "../elements";
-import type { ClassNames } from "../options";
+import {
+  type CodeGroup,
+  createRehypeCodeGroupElement,
+} from "../elements/index.js";
+import type { ClassNames } from "../options.js";
 
 const START_DELIMITER_REGEX = /::: code-group labels=\[([^\]]+)\]/;
 const END_DELIMITER = ":::";

@@ -1,6 +1,6 @@
 import type { Element, Root } from "hast";
-import { createScriptElement, createStyleElement } from "../elements";
-import type { ClassNames } from "../options";
+import { createScriptElement, createStyleElement } from "../elements/index.js";
+import type { ClassNames } from "../options.js";
 
 export const addStylesAndScript = (
   tree: Root,

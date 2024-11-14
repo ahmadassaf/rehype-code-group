@@ -1,16 +1,16 @@
 import type { Element, Root } from "hast";
 import type { Plugin } from "unified";
 import { SKIP, visit } from "unist-util-visit";
-import type { CodeGroup } from "./elements";
+import type { CodeGroup } from "./elements/index.js";
+import { getClassNames } from "./elements/styles.js";
 import {
   handleEndDelimiter,
   handleStartDelimiter,
   isEndDelimiterNode,
   isStartDelimiterNode,
-} from "./handlers/delimiters";
-import { addStylesAndScript } from "./handlers/stylesAndScript";
-import type { RehypeCodeGroupOptions } from "./options";
-import { getClassNames } from "./styles";
+} from "./handlers/delimiters.js";
+import { addStylesAndScript } from "./handlers/stylesAndScript.js";
+import type { RehypeCodeGroupOptions } from "./options.js";
 
 /**
  * ## Rehype Code Group
