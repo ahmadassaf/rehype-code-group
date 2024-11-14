@@ -1,5 +1,5 @@
-import type { ClassNames } from "./options";
-import { defaultClassNames } from "./styles";
+import type { ClassNames } from "../options.js";
+import { defaultClassNames } from "./styles.js";
 
 export const getScript = (classNames: ClassNames) => {
   const activeTabClassNames = classNames.activeTabClass.split(" ");

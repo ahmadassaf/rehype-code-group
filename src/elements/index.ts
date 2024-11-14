@@ -1,7 +1,7 @@
 import type { Element, Root } from "hast";
-import type { ClassNames } from "./options";
-import { getScript } from "./script";
-import { styles } from "./styles";
+import type { ClassNames } from "../options.js";
+import { getScript } from "./script.js";
+import { styles } from "./styles.js";
 
 export type CodeGroup = {
   parentNode: Element | Root;

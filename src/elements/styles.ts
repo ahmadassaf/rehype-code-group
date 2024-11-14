@@ -1,4 +1,4 @@
-import type { ClassNames } from "./options";
+import type { ClassNames } from "../options.js";
 
 export const defaultClassNames: ClassNames = {
   activeTabClass: "active",
