@@ -1,5 +1,11 @@
 # rehype-code-group
 
+## 0.2.1
+
+### Patch Changes
+
+- [#13](https://github.com/ITZSHOAIB/rehype-code-group/pull/13) [`f88b774`](https://github.com/ITZSHOAIB/rehype-code-group/commit/f88b774afa66233c580043a0079db0852b676d69) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: enhanced classnames
+
 ## 0.2.0
 
 ### Minor Changes
