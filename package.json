@@ -93,7 +93,7 @@
     "*": ["pnpm lint", "git add"]
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm typecheck && pnpm lint:staged"
+    "pre-commit": "pnpm typecheck && pnpm test:coverage && pnpm lint:staged"
   },
   "packageManager": "pnpm@9.12.0",
   "engines": {
