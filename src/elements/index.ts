@@ -9,8 +9,9 @@ export type CodeGroup = {
   tabLabels: string[];
 };
 
+let idCounter = 0;
 const generateUniqueId = (): string => {
-  return `rcg-${Math.random().toString(36).substr(2, 9)}`;
+  return `rcg-${idCounter++}`;
 };
 
 const createRcgTabsElement = (

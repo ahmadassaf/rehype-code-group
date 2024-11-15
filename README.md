@@ -64,21 +64,24 @@ Check this functionalty live: [https://4techloverz.com/wordpress-astro-migration
 Here's an example of how to use the plugin with Rehype:
 
 ```typescript
-import fs from "node:fs/promises";
 import { rehype } from "rehype";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypeMinifyWhitespace from "rehype-minify-whitespace";
+import rehypeStringify from "rehype-stringify";
 import rehypeCodeGroup from "rehype-code-group";
 
-const document = await fs.readFile("example/input.html", "utf8");
+const options = {};
 
 const file = await rehype()
-  .use(rehypeCodeGroup, {
-    customClassNames: {
-      activeTabClass: "my-active-tab",
-    },
-  })
-  .process(document);
+  .use(remarkParse)
+  .use(remarkRehype)
+  .use(rehypeCodeGroup, options)
+  .use(rehypeMinifyWhitespace)
+  .use(rehypeStringify)
+  .process(input);
 
-await fs.writeFile("example/output.html", String(file));
+console.log(String(file))
 ```
 
 ### With Astro
@@ -126,9 +129,9 @@ You can customize the class names used by the plugin to match your project's sty
 
 ### Output Example 📄
 
-Given the following input HTML: [input.html](https://github.com/ITZSHOAIB/rehype-code-group/blob/main/example/input.html)
+Given the following input HTML: [input.html](https://github.com/ITZSHOAIB/rehype-code-group/blob/main/test/fixtures/single-md/input.html)
 
-The plugin will produce the following output: [output.html](https://github.com/ITZSHOAIB/rehype-code-group/blob/main/example/output.html)
+The plugin will produce the following output: [output.html](https://github.com/ITZSHOAIB/rehype-code-group/blob/main/test/fixtures/single-md/output.html)
 
 ## Contributing 🤝
 Contributions are welcome! Please read the contributing guidelines first.
