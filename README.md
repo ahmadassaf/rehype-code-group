@@ -129,9 +129,9 @@ You can customize the class names used by the plugin to match your project's sty
 
 ### Output Example 📄
 
-Given the following input HTML: [input.html](https://github.com/ITZSHOAIB/rehype-code-group/blob/main/test/fixtures/single-md/input.html)
+Given the following input Markdown: [input.md](/test/fixtures/single-md/input.md)
 
-The plugin will produce the following output: [output.html](https://github.com/ITZSHOAIB/rehype-code-group/blob/main/test/fixtures/single-md/output.html)
+The plugin will produce the following output: [output.html](/test/fixtures/single-md/output.html)
 
 ## Contributing 🤝
 Contributions are welcome! Please read the contributing guidelines first.
