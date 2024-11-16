@@ -2,10 +2,13 @@
 
 # Rehype Code Group Plugin 🤖
 
-A [Rehype](https://github.com/rehypejs/rehype) plugin for grouping code blocks with tabs, allowing you to switch between different code snippets easily. Perfect for documentation and tutorials where you want to show the same code in different languages or configurations.
+![NPM Version](https://img.shields.io/npm/v/rehype-code-group)
+![NPM Downloads](https://img.shields.io/npm/dm/rehype-code-group)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/rehype-code-group)
+![NPM License](https://img.shields.io/npm/l/rehype-code-group)
 
-> [!NOTE]
-> ** "This package is ***ESM*** only"
+
+A [Rehype](https://github.com/rehypejs/rehype) plugin for grouping code blocks with tabs, allowing you to switch between different code snippets easily. Perfect for **documentation** and **tutorials** where you want to show the same code in different languages or configurations.
 
 **Inspired by [Vitepress Code Groups](https://vitepress.dev/guide/markdown#code-groups)**
 
@@ -14,12 +17,17 @@ A [Rehype](https://github.com/rehypejs/rehype) plugin for grouping code blocks w
 
 ## Features ✨
 
-- Group code blocks with tabs
-- Customizable class names for styling
-- Automatically adds necessary styles and scripts to the document
+- **Group Code Blocks with Tabs**: Easily group code blocks with tabs, allowing users to switch between different code snippets.
+- **Automatic Styles and Scripts**: Automatically adds the necessary styles and scripts to the document.- **Accessibility**: Enhanced accessibility features for better user experience.
+- **Versatile Content Grouping**: Create tabs for any type of content, not just code blocks. Organize and display different types of content within tabs.
+- **Customizable Class Names**: Customize the class names used by the plugin to match your project's styles.
 
 ## Installation 📦
-Install the plugin using npm or yarn:
+
+> [!NOTE]
+> This package is [ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) only.
+
+Install the plugin using any package manager:
 
 ```bash
 npm install rehype-code-group
@@ -27,6 +35,20 @@ npm install rehype-code-group
 pnpm add rehype-code-group
 # or
 yarn add rehype-code-group
+```
+
+In Deno with [esm.sh](https://esm.sh/):
+
+```js
+import rehypeCodeGroup from 'https://esm.sh/rehype-code-group'
+```
+
+In browsers with [esm.sh](https://esm.sh/):
+
+```html
+<script type="module">
+  import rehypeCodeGroup from 'https://esm.sh/rehype-code-group?bundle'
+</script>
 ```
 
 ## Usage 🚀
