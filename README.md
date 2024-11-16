@@ -18,7 +18,8 @@ A [Rehype](https://github.com/rehypejs/rehype) plugin for grouping code blocks w
 ## Features ✨
 
 - **Group Code Blocks with Tabs**: Easily group code blocks with tabs, allowing users to switch between different code snippets.
-- **Automatic Styles and Scripts**: Automatically adds the necessary styles and scripts to the document.- **Accessibility**: Enhanced accessibility features for better user experience.
+- **Automatic Styles and Scripts**: Automatically adds the necessary styles and scripts to the document.
+- **Accessibility**: Enhanced accessibility features for better user experience.
 - **Versatile Content Grouping**: Create tabs for any type of content, not just code blocks. Organize and display different types of content within tabs.
 - **Customizable Class Names**: Customize the class names used by the plugin to match your project's styles.
 
