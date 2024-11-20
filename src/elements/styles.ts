@@ -64,6 +64,7 @@ export const styles = `
 }
 .${defaultClassNames.blockContainerClass} {
   display: none;
+  overflow-x: auto;
   &.${defaultClassNames.activeBlockClass} {
     display: block;
   }
