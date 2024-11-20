@@ -1,5 +1,11 @@
 # rehype-code-group
 
+## 0.2.2
+
+### Patch Changes
+
+- [#18](https://github.com/ITZSHOAIB/rehype-code-group/pull/18) [`3f77fe9`](https://github.com/ITZSHOAIB/rehype-code-group/commit/3f77fe9404f0a2a522bca0e4ad682e65f2190da7) Thanks [@Indronil22](https://github.com/Indronil22)! - Fix: code blocks overflowing issue
+
 ## 0.2.1
 
 ### Patch Changes
