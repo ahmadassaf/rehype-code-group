@@ -1,4 +1,4 @@
-import type { Element, Root } from "hast";
+import type { Root } from "hast";
 import type { Plugin } from "unified";
 import { SKIP, visit } from "unist-util-visit";
 import type { CodeGroup } from "./elements/index.js";
@@ -9,7 +9,6 @@ import {
   isEndDelimiterNode,
   isStartDelimiterNode,
 } from "./handlers/delimiters.js";
-import { addStylesAndScript } from "./handlers/stylesAndScript.js";
 import type { RehypeCodeGroupOptions } from "./options.js";
 
 /**
@@ -67,8 +66,6 @@ const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
   const classNames = getClassNames(customClassNames);
 
   return (tree: Root) => {
-    let headElement: Element | undefined;
-    let htmlElement: Element | undefined;
     let firstStyleIndex = -1;
     const codeGroups: CodeGroup[] = [];
     let codeGroupFound = false;
@@ -85,14 +82,6 @@ const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
     visit(tree, "element", (node, index, parent) => {
       if (node.type !== "element" || index === undefined) {
         return;
-      }
-
-      if (node.tagName === "ul") {
-        headElement = node;
-      }
-
-      if (node.tagName === "html") {
-        htmlElement = node;
       }
 
       // Identify the first style element index
@@ -123,16 +112,6 @@ const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
         }
       }
     });
-
-    if (codeGroupFound) {
-      addStylesAndScript(
-        tree,
-        classNames,
-        headElement,
-        htmlElement,
-        firstStyleIndex,
-      );
-    }
   };
 };
 
