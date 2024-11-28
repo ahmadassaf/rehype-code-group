@@ -68,7 +68,6 @@ const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
   return (tree: Root) => {
     let firstStyleIndex = -1;
     const codeGroups: CodeGroup[] = [];
-    let codeGroupFound = false;
 
     /**
      * Visit each element node in the tree to
@@ -107,7 +106,6 @@ const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
         );
 
         if (found) {
-          codeGroupFound = found;
           return [SKIP, skipIndex];
         }
       }
