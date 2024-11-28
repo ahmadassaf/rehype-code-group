@@ -21,7 +21,7 @@ const createRcgTabsElement = (
 ): Element => {
   return {
     type: "element",
-    tagName: "div",
+    tagName: "span",
     properties: { className: classNames.tabContainerClass, role: "tablist" },
     children: tabLabels.map((label, i) => ({
       type: "element",
@@ -47,7 +47,7 @@ const createCodeBlockWrapper = (
   const isActive = idx === 0;
   return {
     type: "element",
-    tagName: "div",
+    tagName: "span",
     properties: {
       className: `${classNames.blockContainerClass}${isActive ? ` ${classNames.activeBlockClass}` : ""}`,
       role: "tabpanel",
@@ -91,7 +91,7 @@ export const createRehypeCodeGroupElement = (
 
   return {
     type: "element",
-    tagName: "div",
+    tagName: "span",
     properties: { className: classNames.codeGroupClass },
     children: [rcgTabsElement, ...codeBlocks],
   };
