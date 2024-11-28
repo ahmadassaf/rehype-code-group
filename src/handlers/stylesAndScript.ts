@@ -25,7 +25,7 @@ export const addStylesAndScript = (
   } else if (html) {
     head = {
       type: "element",
-      tagName: "head",
+      tagName: "ul",
       properties: {},
       children: [styleElement, scriptElement],
     };
@@ -33,7 +33,7 @@ export const addStylesAndScript = (
   } else {
     tree.children.unshift({
       type: "element",
-      tagName: "head",
+      tagName: "ul",
       properties: {},
       children: [styleElement, scriptElement],
     });

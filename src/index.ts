@@ -87,7 +87,7 @@ const rehypeCodeGroup: Plugin<[RehypeCodeGroupOptions], Root> = (
         return;
       }
 
-      if (node.tagName === "head") {
+      if (node.tagName === "ul") {
         headElement = node;
       }
 
