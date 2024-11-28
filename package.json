@@ -1,5 +1,5 @@
 {
-  "name": "rehype-code-group",
+  "name": "rehype-code-group-next",
   "version": "0.2.2",
   "description": "A Rehype plugin for grouping code blocks with tabs, perfect for documentation and tutorials. Works with all Code Syntax Highlighters.",
   "main": "dist/index.js",
@@ -82,7 +82,7 @@
     "rehype-tab-block",
     "rehype-code-grouping-tab-block"
   ],
-  "author": "Sohab Sk",
+  "author": "Sohab Sk; Ahmad Assaf",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/ITZSHOAIB/rehype-code-group"
